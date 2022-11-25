@@ -1,0 +1,18 @@
+$firstname = Read-Host "Enter in the First Name"
+Write-Host
+$lastname = Read-Host "Enter in the Last Name"
+Write-Host
+$kasutajanimi = $firstname.ToLower() + "." + $lastname.ToLower()
+
+if ( Get-LocalUser | Where-Object -Property Name -EQ $firstname ) {
+
+Remove-LocalUser  -Name $firstname
+Write-Output "Kasutaja on kustutatud"
+
+}
+
+ else {
+
+Write-Host "$kasutajanimi does not exist."
+
+}
