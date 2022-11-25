@@ -1,0 +1,14 @@
+$firstname = Read-Host "Enter in the First Name"
+Write-Host
+$lastname = Read-Host "Enter in the Last Name"
+Write-Host
+$kasutajanimi = $firstname.ToLower() + "." + $lastname.ToLower()
+$parool = ConvertTo-SecureString "Parool1!" -AsPlainText -Force
+
+$op = Get-LocalUser | where-Object Name -eq "$firstname" | Measure
+if ($op.Count -eq 0) {
+     New-LocalUser  -Name "$firstname" -Password $parool -FullName "$kasutajanimi"
+     echo "Kasutaja $kasutajanimi on lisatud!"
+} else {
+     Write-Output "Kasutaja $kasutajanimi juba eksisteerib"
+}
