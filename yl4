@@ -1,0 +1,39 @@
+$firstname = Read-Host "Sisesta kasutaja eesnimi"
+$lastename = Read-Host "Sisesta kasutaja perenimi"
+$username = $firstname + "." + $lastname
+$username = $username.ToLower()
+$username = Translit($username)
+$displayname = $firstname + " " + $lastname
+
+    if (Get-ADUser -F {SamAccountName -eq $Username})
+        {
+                 Remove-ADUser -identity $username
+               echo "Kasutaja $displayname on eemaldatud"
+        }
+        else
+        Write "Kasutajat pole olemas või on tekkis probleem eemaldamise ajal, proovige palun uuesti"
+        
+         }
+Function Translit {
+   param(
+       [string] $inputString
+   )
+   
+   
+       $Translit = @{
+       [char]'ä' = "a"
+       [char]'ö' = "o"
+       [char]'ü' = "u"
+       [char]'õ' = "o"
+       }
+       $outputString=""
+       foreach ($character in $inputCharacter = $inputString.ToCharArray())
+    {
+       if ($Translit[$character] -cne $Null){
+       $outputString += $Translit[$character]
+       }else {
+           $outputString += $character
+           }
+           }
+           Write-Output $outputString
+           }
